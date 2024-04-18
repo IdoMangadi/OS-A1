@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "main_stckof": "c"
+        "main_stckof": "c",
+        "cctype": "c",
+        "math.h": "c"
     }
 }

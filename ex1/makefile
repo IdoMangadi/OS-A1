@@ -14,4 +14,4 @@ main_memoexcd: main_memoexcd.c
 
 # Cleaning:
 clean:
-	rm -f main_stckof main_zerodiv main_memoexcd *.o 
+	rm -f main_stckof main_zerodiv main_memoexcd *.o *.out

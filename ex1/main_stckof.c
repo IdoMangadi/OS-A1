@@ -7,6 +7,8 @@ int main(){
     long b = 10;
     long stack_over_flow = over_flow(a, b);  // inforcing stack over flow
 
+    printf("Recursice value: %ld\n", stack_over_flow);
+
     return 0;
 }
 

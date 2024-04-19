@@ -16,7 +16,7 @@ int main(){
  * Recursive function to inforce stack over flow.
 */
 long over_flow(long x, long y){
-    long z = 10;
-    long w = 10;
-    return over_flow(x, y) + over_flow(z, w);
+    long z = x + y;
+    long w = x + y;
+    return over_flow(z, w);
 }

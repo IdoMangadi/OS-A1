@@ -14,8 +14,13 @@ valgrind: main_dijkstra
 	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./main_dijkstra
 
 coverage: main_dijkstra
-	./main_dijkstra 
-	gcov main_dijkstra.c > coverage_report.txt 2>&1
+	./main_dijkstra < ./tests/testBadInput.txt > /dev/null || true;
+	./main_dijkstra < ./tests/testBadInput2.txt > /dev/null || true;
+	./main_dijkstra < ./tests/testBadInput3.txt > /dev/null || true;
+#	./main_dijkstra < ./tests/testNeg.txt > /dev/null || true;
+	./main_dijkstra < ./tests/testZeroVtx.txt > /dev/null || true;
+	./main_dijkstra < ./tests/testGood.txt > /dev/null || true;
+	gcov main_dijkstra.c >> coverage_report.txt 2>&1
 	
 	
 

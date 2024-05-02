@@ -1,4 +1,4 @@
-FLAGS = -Wall -g
+FLAGS = -Wall -g -pg
 
 .PHONY: all clean
 

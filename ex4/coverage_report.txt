@@ -1,0 +1,5 @@
+File 'main_dijkstra.c'
+Lines executed:70.37% of 81
+Creating 'main_dijkstra.c.gcov'
+
+Lines executed:70.37% of 81

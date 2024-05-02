@@ -29,8 +29,11 @@ int minDistance(int dist[], bool sptSet[],int V)
 // array
 void printSolution(int dist[],int V)
 {
-	printf("Vertex \t\t Distance from Source\n");
+	printf("\nVertex \t\t Distance from Source\n");
 	for (int i = 0; i < V; i++)
+    if(dist[i] == INT_MAX)
+        printf("%d \t\t\t\t INF\n", i);
+    else    
 		printf("%d \t\t\t\t %d\n", i, dist[i]);
 }
 
@@ -99,55 +102,58 @@ int main()
     int size = 0;
     printf("Enter the size of the matrix: ");
     if(scanf("%d", &size)==0){
-        printf("Scanf error\n");
-        return -1;
+        printf("\nScanf error\n");
+        return 0;
     }
     if(size <= 0){
-        printf("Size must be greater than zero!\n");
-        return -1;
+        printf("\nSize must be greater than zero!\n");
+        return 0;
     }
-    int** graph = (int**)malloc(size * sizeof(int));
+    int** graph = (int**)malloc(size * sizeof(int*));
     if(graph == NULL){
-        printf("malloc error\n");
-        return -1;
+        printf("\nmalloc error\n");
+        return 0;
     }
      for (int i = 0; i < size; i++) {
         graph[i] = malloc(size * sizeof(int));
         if (graph[i] == NULL) {
-           printf("malloc error\n");
+           printf("\nmalloc error\n");
+           for(int j = 0; j < i; j++){
+                free(graph[j]);
+           }
            free(graph);
-              return -1;
+              return 0;
         }
     }
    for(int i = 0;i<size;i++){
-    // graph[i] = (int*)malloc(sizeof(int)*size); // allocation for actual row
+    
     for(int j=0;j<size;j++){
-        printf("Enter the value for the cell (%d,%d):", i, j);
+        printf("\nEnter the value for the cell (%d,%d):", i, j);
         // 
         if(scanf("%d", &graph[i][j])==0){
-            printf("Scanf error\n");
+            printf("\nScanf error\n");
             freeG(graph,size);
-            return -1;
+            return 0;
         }
         if(graph[i][j] < 0){
-            printf("The value must be at least zero!\n");
+            printf("\nThe value must be at least zero!\n");
             freeG(graph,size);
-            return -1;
+            return 0;
         }
     }
    }
    int start = 0;
-   printf("Enter the start vertex: ");
-    if(scanf("%d", &start)==0){  // should be print and then scan
-         printf("Scanf error\n");
+   printf("\nEnter the start vertex: ");
+    if(scanf("%d", &start)==0){  
+         printf("\nScanf error\n");
          freeG(graph,size);
-         return -1;
+         return 0;
     }
     if (start>=size || start<0)
     {
-        printf("The start vertex must be between 0 and %d\n", size-1);
+        printf("\nThe start vertex must be between 0 and %d\n", size-1);
         freeG(graph,size);
-        return -1;
+        return 0;
     }
    dijkstra(graph, start, size);
    freeG(graph,size);

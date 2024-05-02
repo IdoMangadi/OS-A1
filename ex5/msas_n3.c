@@ -31,6 +31,18 @@ int max_sub_array_sum_n3(int arr[], int size) {
     return max_sum;
 }
 
+/**
+ * Generating array of integers of size "size" using srand with "rand_seed" 
+*/
+void arr_gen(int *arr, int size, unsigned int rand_seed){
+    srand(rand_seed);
+    for(int i=0; i<size; i++){
+        arr[i] = rand() % ((MAX_VALUE) - (MIN_VALUE) + 1) + (MIN_VALUE); // normalizing rand output to be between MAX_VALUE to MIN_VALUE
+        // printf("%d ", arr[i]);
+    }
+    // printf("\n");
+}
+
 int main(int argc, char* argv[]){
 
     // Argument handling:
@@ -48,14 +60,15 @@ int main(int argc, char* argv[]){
 
     // Array generating:
     int* arr = (int*)malloc(sizeof(int) * size);
-    srand(rand_seed);
-    for(int i=0; i<size; i++){
-        arr[i] = rand() % ((MAX_VALUE) - (MIN_VALUE) + 1) + (MIN_VALUE); // normalizing rand output to be between MAX_VALUE to MIN_VALUE
+    if(arr == NULL){
+        fprintf(stderr,"Malloc failure.\n");
+        return 1;
     }
+    arr_gen(arr, size, rand_seed);
 
     // max sub array sum function:
     int res = max_sub_array_sum_n3(arr, size);
-    // printf("For seed: %u, and size: %d, result is: %d", rand_seed, size, res);
+    printf("For seed: %u, and size: %d, result is: %d\n", rand_seed, size, res);
     free(arr);
     return 0;
 }

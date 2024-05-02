@@ -2,6 +2,10 @@
     "files.associations": {
         "main_stckof": "c",
         "cctype": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "utility": "c"
     }
 }

@@ -1,0 +1,165 @@
+        -:    0:Source:main_dijkstra.c
+        -:    0:Graph:main_dijkstra.gcno
+        -:    0:Data:main_dijkstra.gcda
+        -:    0:Runs:9
+        -:    1:// C program for Dijkstra's single source shortest path
+        -:    2:// algorithm. The program is for adjacency matrix
+        -:    3:// representation of the graph
+        -:    4:
+        -:    5:#include <limits.h>
+        -:    6:#include <stdbool.h>
+        -:    7:#include <stdio.h>
+        -:    8:#include <stdlib.h>
+        -:    9:
+        -:   10:// Number of vertices in the graph
+        -:   11:
+        -:   12:
+        -:   13:// A utility function to find the vertex with minimum
+        -:   14:// distance value, from the set of vertices not yet included
+        -:   15:// in shortest path tree
+        2:   16:int minDistance(int dist[], bool sptSet[],int V)
+        -:   17:{
+        -:   18:	// Initialize min value
+        2:   19:	int min = INT_MAX, min_index;
+        -:   20:
+        8:   21:	for (int v = 0; v < V; v++)
+        6:   22:		if (sptSet[v] == false && dist[v] <= min)
+        2:   23:			min = dist[v], min_index = v;
+        -:   24:
+        2:   25:	return min_index;
+        -:   26:}
+        -:   27:
+        -:   28:// A utility function to print the constructed distance
+        -:   29:// array
+        1:   30:void printSolution(int dist[],int V)
+        -:   31:{
+        1:   32:	printf("\nVertex \t\t Distance from Source\n");
+        4:   33:	for (int i = 0; i < V; i++)
+        3:   34:    if(dist[i] == INT_MAX)
+        1:   35:        printf("%d \t\t\t\t INF\n", i);
+        -:   36:    else    
+        2:   37:		printf("%d \t\t\t\t %d\n", i, dist[i]);
+        1:   38:}
+        -:   39:
+        -:   40:// Function that implements Dijkstra's single source
+        -:   41:// shortest path algorithm for a graph represented using
+        -:   42:// adjacency matrix representation
+        1:   43:void dijkstra(int** graph, int src, int V)
+        1:   44:{
+        1:   45:	int dist[V]; // The output array. dist[i] will hold the
+        -:   46:				// shortest
+        -:   47:	// distance from src to i
+        -:   48:
+        1:   49:	bool sptSet[V]; // sptSet[i] will be true if vertex i is
+        -:   50:					// included in shortest
+        -:   51:	// path tree or shortest distance from src to i is
+        -:   52:	// finalized
+        -:   53:
+        -:   54:	// Initialize all distances as INFINITE and stpSet[] as
+        -:   55:	// false
+        4:   56:	for (int i = 0; i < V; i++)
+        3:   57:		dist[i] = INT_MAX, sptSet[i] = false;
+        -:   58:
+        -:   59:	// Distance of source vertex from itself is always 0
+        1:   60:	dist[src] = 0;
+        -:   61:
+        -:   62:	// Find shortest path for all vertices
+        3:   63:	for (int count = 0; count < V - 1; count++) {
+        -:   64:		// Pick the minimum distance vertex from the set of
+        -:   65:		// vertices not yet processed. u is always equal to
+        -:   66:		// src in the first iteration.
+        2:   67:		int u = minDistance(dist, sptSet, V);
+        -:   68:
+        -:   69:		// Mark the picked vertex as processed
+        2:   70:		sptSet[u] = true;
+        -:   71:
+        -:   72:		// Update dist value of the adjacent vertices of the
+        -:   73:		// picked vertex.
+        8:   74:		for (int v = 0; v < V; v++)
+        -:   75:
+        -:   76:			// Update dist[v] only if is not in sptSet,
+        -:   77:			// there is an edge from u to v, and total
+        -:   78:			// weight of path from src to v through u is
+        -:   79:			// smaller than current value of dist[v]
+        6:   80:			if (!sptSet[v] && graph[u][v]
+        1:   81:				&& dist[u] != INT_MAX
+        1:   82:				&& dist[u] + graph[u][v] < dist[v])
+        1:   83:				dist[v] = dist[u] + graph[u][v];
+        -:   84:	}
+        -:   85:
+        -:   86:	// print the constructed distance array
+        1:   87:	printSolution(dist, V);
+        1:   88:}
+        -:   89:
+        5:   90:void freeG(int** graph, int size){
+       18:   91:    for (int i = 0; i < size; i++)
+        -:   92:    {
+       13:   93:        int* currentIntPtr = graph[i];
+       13:   94:        free(currentIntPtr);
+        -:   95:    }
+        5:   96:    free(graph);
+        5:   97:}
+        -:   98:
+        -:   99:// driver's code
+        9:  100:int main()
+        -:  101:{ 
+        9:  102:    int size = 0;
+        9:  103:    printf("Enter the size of the matrix: ");
+        9:  104:    if(scanf("%d", &size)==0){
+        1:  105:        printf("\nScanf error\n");
+        1:  106:        return 0;
+        -:  107:    }
+        8:  108:    if(size <= 0){
+        1:  109:        printf("\nSize must be greater than zero!\n");
+        1:  110:        return 0;
+        -:  111:    }
+        7:  112:    int** graph = (int**)malloc(size * sizeof(int*));
+        7:  113:    if(graph == NULL){
+        1:  114:        printf("\nmalloc error\n");
+        1:  115:        return 0;
+        -:  116:    }
+    35200:  117:     for (int i = 0; i < size; i++) {
+    35195:  118:        graph[i] = malloc(size * sizeof(int));
+    35195:  119:        if (graph[i] == NULL) {
+        1:  120:           printf("\nmalloc error\n");
+    35182:  121:           for(int j = 0; j < i; j++){
+    35181:  122:                free(graph[j]);
+        -:  123:           }
+        1:  124:           free(graph);
+        1:  125:              return 0;
+        -:  126:        }
+        -:  127:    }
+       14:  128:   for(int i = 0;i<size;i++){
+        -:  129:    
+       38:  130:    for(int j=0;j<size;j++){
+       29:  131:        printf("\nEnter the value for the cell (%d,%d):", i, j);
+        -:  132:        // 
+       29:  133:        if(scanf("%d", &graph[i][j])==0){
+        1:  134:            printf("\nScanf error\n");
+        1:  135:            freeG(graph,size);
+        1:  136:            return 0;
+        -:  137:        }
+       28:  138:        if(graph[i][j] < 0){
+        1:  139:            printf("\nThe value must be at least zero!\n");
+        1:  140:            freeG(graph,size);
+        1:  141:            return 0;
+        -:  142:        }
+        -:  143:    }
+        -:  144:   }
+        3:  145:   int start = 0;
+        3:  146:   printf("\nEnter the start vertex: ");
+        3:  147:    if(scanf("%d", &start)==0){  
+        1:  148:         printf("\nScanf error\n");
+        1:  149:         freeG(graph,size);
+        1:  150:         return 0;
+        -:  151:    }
+        2:  152:    if (start>=size || start<0)
+        -:  153:    {
+        1:  154:        printf("\nThe start vertex must be between 0 and %d\n", size-1);
+        1:  155:        freeG(graph,size);
+        1:  156:        return 0;
+        -:  157:    }
+        1:  158:   dijkstra(graph, start, size);
+        1:  159:   freeG(graph,size);
+        1:  160:	return 0;
+        -:  161:}

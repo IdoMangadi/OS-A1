@@ -73,7 +73,7 @@ int main(int argc, char* argv[]){
         // executing cat:
         char *cat_args[] = {"cat", NULL};
         execve("/bin/cat", cat_args, NULL);
-        fprintf(stderr, "Usage: %s Firstname Lastname,PhoneNumber\n", argv[0]); // getting here means the execve didnt succeed
+        fprintf(stderr, "Execve error\n"); // getting here means the execve didnt succeed
         return 1;
     }
     else {  // Parent process

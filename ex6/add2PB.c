@@ -43,49 +43,75 @@ int main(int argc, char* argv[]){
         record_size++;
     }
 
-    int fd[2];
-    pid_t pid;
+    // int fd[2];
+    // pid_t pid;
 
-    if(pipe(fd) == -1){  // creating a pipe
-        fprintf(stderr, "Pipe error\n");
-        return 1;
-    }
+    // if(pipe(fd) == -1){  // creating a pipe
+    //     fprintf(stderr, "Pipe error\n");
+    //     return 1;
+    // }
 
-    pid = fork();  // creating a child proccess
-    if(pid == -1){
-        fprintf(stderr, "Fork error\n");
-        return  1;
-    }
+    // pid = fork();  // creating a child proccess
+    // if(pid == -1){
+    //     fprintf(stderr, "Fork error\n");
+    //     return  1;
+    // }
 
-    if(pid == 0){  // child process
+    // if(pid == 0){  // child process
 
-        close(fd[1]);  // closing writing end
+    //     close(fd[1]);  // closing writing end
 
-        // redirecting stdin to the reading end of the pipe
-        dup2(fd[0], 0); 
-        close(fd[0]); // closing reading end
+    //     // redirecting stdin to the reading end of the pipe
+    //     dup2(fd[0], 0); 
+    //     close(fd[0]); // closing reading end
 
-        // redirectin stdout to the phonebook file:
-        int pb = open(PB_PATH, O_WRONLY | O_CREAT | O_APPEND, 0666);
-        dup2(pb, 1);
-        close(pb);
+    //     // redirectin stdout to the phonebook file:
+    //     int pb = open(PB_PATH, O_WRONLY | O_CREAT | O_APPEND, 0666);
+    //     dup2(pb, 1);
+    //     close(pb);
 
-        // executing cat:
-        char *cat_args[] = {"cat", NULL};
-        execve("/bin/cat", cat_args, NULL);
-        fprintf(stderr, "Execve error\n"); // getting here means the execve didnt succeed
-        return 1;
-    }
-    else {  // Parent process
+    //     // executing cat:
+    //     char *cat_args[] = {"cat", NULL};
+    //     execve("/bin/cat", cat_args, NULL);
+    //     fprintf(stderr, "Execve error\n"); // getting here means the execve didnt succeed
+    //     return 1;
+    // }
+    // else {  // Parent process
 
-        close(fd[0]);  // Close reading end of the pipe
+    //     close(fd[0]);  // Close reading end of the pipe
 
-        // writing to the pipe:
-        write(fd[1], record, record_size);
-        close(fd[1]);  // Close writing end of the pipe
+    //     // writing to the pipe:
+    //     write(fd[1], record, record_size);
+    //     close(fd[1]);  // Close writing end of the pipe
 
-        wait(NULL);  // wating for child procces to end
-    }
+    //     wait(NULL);  // wating for child procces to end
+    // }
+/**
+ * Easier soloution, checked and works fine
+ *
+*/
+      int fd = open(PB_PATH, O_WRONLY | O_CREAT | O_APPEND, 0666); //Get file descriptor for writing(can also create and append, but thats the write end of the pipe)
+        if(fd == -1){
+            perror("open error");
+            return(1);
+        }
+        write(fd, record, record_size); //write to the file by fd
+        close(fd);  // Close fd
+
+
     
     return 0;
 }
+
+
+
+    
+
+    
+    
+
+       
+      
+     
+    
+    

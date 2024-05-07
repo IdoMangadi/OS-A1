@@ -33,7 +33,8 @@ int max_sub_array_sum_n2(int arr[], int size) {
  * Generating array of integers of size "size" using srand with "rand_seed" 
 */
 void arr_gen(int *arr, int size, unsigned int rand_seed){
-    srand(rand_seed);
+    srand(rand_seed);  // setting seed in srand
+    // loop to generate array values using rand:
     for(int i=0; i<size; i++){
         arr[i] = rand() % ((MAX_VALUE) - (MIN_VALUE) + 1) + (MIN_VALUE); // normalizing rand output to be between MAX_VALUE to MIN_VALUE
         // printf("%d ", arr[i]);

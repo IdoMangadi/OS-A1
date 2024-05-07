@@ -10,12 +10,18 @@
 #define PB_PATH "PhoneBook.txt"
 
 /**
- * The logic:
+ * Logic for the more complex version of this code (using fork, pipe and execve):
  * first the program handles arguments and operates a validation check on them.
  * then it creats a pipe and a child proccess using fork() and keeps its proccess id (pid).
  * child proccess: manipulating stdin and stdout, means directing stdin to reading end of the pipe and stdout to the phonebook file.
  *                 using execve to launch cat with no arguments, means it will read from stdin and write to stdout (redirected).
  * parent proccess: sending the string via the pipe and waits for child procccess to finish.               
+*/
+
+/**
+ * A simple phone number adding to a file.
+ * Arguments format: "Firstname(optional) Lastname,PhoneNumber".
+ * NOTE: Hyphenated names in format: "Bat-Sheva", "Ben-Ami" and so.
 */
 int main(int argc, char* argv[]){
     // handling arguments:
@@ -90,15 +96,13 @@ int main(int argc, char* argv[]){
  * Easier soloution, checked and works fine
  *
 */
-      int fd = open(PB_PATH, O_WRONLY | O_CREAT | O_APPEND, 0666); //Get file descriptor for writing(can also create and append, but thats the write end of the pipe)
+      int fd = open(PB_PATH, O_WRONLY | O_CREAT | O_APPEND, 0666); // Get file descriptor for writing(can also create and append, but thats the write end of the pipe)
         if(fd == -1){
             perror("open error");
             return(1);
         }
-        write(fd, record, record_size); //write to the file by fd
+        write(fd, record, record_size);  // write to the file by fd
         close(fd);  // Close fd
-
-
     
     return 0;
 }

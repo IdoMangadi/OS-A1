@@ -32,7 +32,8 @@ int max_sub_array_sum_n(int *arr, int size){
  * Generating array of integers of size "size" using srand with "rand_seed" 
 */
 void arr_gen(int *arr, int size, unsigned int rand_seed){
-    srand(rand_seed);
+    srand(rand_seed);  // setting seed in srand
+    // loop to generate array values using rand:
     for(int i=0; i<size; i++){
         arr[i] = rand() % ((MAX_VALUE) - (MIN_VALUE) + 1) + (MIN_VALUE); // normalizing rand output to be between MAX_VALUE to MIN_VALUE
         // printf("%d ", arr[i]);
@@ -57,8 +58,8 @@ int main(int argc, char* argv[]){
     }
 
     // Array generating:
-    int* arr = (int*)malloc(sizeof(int) * size);
-    if(arr == NULL){
+    int* arr = (int*)malloc(sizeof(int) * size);  // allocating memory to the array
+    if(arr == NULL){ // allocation check
         fprintf(stderr,"Malloc failure.\n");
         return 1;
     }
@@ -67,6 +68,6 @@ int main(int argc, char* argv[]){
     // max sub array sum function:
     int res = max_sub_array_sum_n(arr, size);
     printf("For seed: %u, and size: %d, result is: %d\n", rand_seed, size, res);
-    free(arr);
+    free(arr);  // freeing th array
     return 0;
 }

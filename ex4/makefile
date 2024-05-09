@@ -18,13 +18,16 @@ coverage: main_dijkstra
 	./main_dijkstra < ./tests/testBadInput2.txt > /dev/null || true;
 	./main_dijkstra < ./tests/testBadInput3.txt > /dev/null || true;
 	./main_dijkstra < ./tests/testBadSource.txt > /dev/null || true;
+	./main_dijkstra < ./tests/testBadSource2.txt > /dev/null || true;
 	./main_dijkstra < ./tests/testBadMalloc.txt > /dev/null || true;
 	./main_dijkstra < ./tests/testBadMalloc2.txt > /dev/null || true;
 	./main_dijkstra < ./tests/testNeg.txt > /dev/null || true;
 	./main_dijkstra < ./tests/testZeroVtx.txt > /dev/null || true;
 	./main_dijkstra < ./tests/testGood.txt > /dev/null || true;
+	./main_dijkstra < ./tests/testTooManyArgs.txt > /dev/null || true;
+	./main_dijkstra < ./tests/testTooManyArgs2.txt > /dev/null || true;
 
-	gcov main_dijkstra.c >> coverage_report.txt 2>&1
+	gcov main_dijkstra.c > coverage_report.txt 2>&1
 	
 	
 

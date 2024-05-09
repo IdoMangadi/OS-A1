@@ -140,6 +140,11 @@ int main()
             freeG(graph,size);
             return 0;
         }
+        if(i==j && graph[i][j]!=0){
+             printf("\nAn edge from a vertex to itself isn't allowed!\n");
+            freeG(graph,size);
+            return 0;
+        }
     }
    }
    int start = 0;
@@ -155,6 +160,8 @@ int main()
         freeG(graph,size);
         return 0;
     }
+
+
    dijkstra(graph, start, size);
    freeG(graph,size);
 	return 0;

@@ -1,6 +1,6 @@
 FLAGS = -Wall -g
 
-
+#need to use export in order to link properly export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./Poisson
 .PHONY: all clean
 
 all: Poisson
